@@ -17,14 +17,11 @@ echo "<br>\r\n";
 $isdone1 = move_uploaded_file($_FILES["mapper"]["tmp_name"], "/var/www/html/files/"."mapper.py");
 $isdone2 = move_uploaded_file($_FILES["reducer"]["tmp_name"], "/var/www/html/files/"."reducer.py");
 $isdone3 = move_uploaded_file($_FILES["input"]["tmp_name"], "/var/www/html/files/"."input");
-if($isdone == false) {
-    echo "upload fail<br>";
-}
 if($isdone1 == true && $isdone2 == true) {
     echo "upload succeed<br>";
 }
 system('sudo su hadoopuser -c "../exec/run.sh"');
-header("Location: ../");
+/* header("Location: ../"); */
 
 /*
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);

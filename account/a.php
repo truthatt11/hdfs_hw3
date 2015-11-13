@@ -3,7 +3,10 @@
 <body>
 
 <?php
-system('whoami');
+system('whoami'); echo '<br>';
+system('sudo whoami'); echo '<br>';
+system('sudo /sbin/ifconfig'); echo '<br>';
+system('whoami'); echo '<br>';
 ?>
 
 </body>
