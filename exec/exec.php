@@ -1,4 +1,5 @@
 <?php
+/*
 shell_exec('hdfs dfs -mkdir files');
 shell_exec('hdfs dfs -copyFromLocal ../files/input /files/input ');
 shell_exec('hadoop jar /home/hadoopuser/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.6.1.jar \
@@ -7,4 +8,7 @@ shell_exec('hadoop jar /home/hadoopuser/hadoop/share/hadoop/tools/lib/hadoop-str
              -input "../input" \
              -output "/log_outdir"');
 shell_exec('hdfs dfs -copyToLocal  /log_outdir/* ../files/*');
+*/
+system('sudo su hadoopuser -c "./run.sh"');
+//header("Location: ../");
 ?>

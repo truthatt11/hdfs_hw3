@@ -23,6 +23,7 @@ if($isdone == false) {
 if($isdone1 == true && $isdone2 == true) {
     echo "upload succeed<br>";
 }
+system('sudo su hadoopuser -c "../exec/run.sh"');
 header("Location: ../");
 
 /*
