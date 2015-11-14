@@ -10,6 +10,10 @@ Version    : 1.0
 Released   : 20131115
 
 -->
+<?php
+include('../session.php');
+?>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -17,8 +21,8 @@ Released   : 20131115
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 
@@ -31,25 +35,62 @@ Released   : 20131115
 		</div>
 		<div id="menu">
 			<ul>
-				<li class="current_page_item"><a href="#" accesskey="1" title="">Status</a></li>
-				<li><a href="upload/" accesskey="2" title="">Upload Code</a></li>
-				<li><a href="account/" accesskey="3" title="">Login/Register</a></li>
-<!--				<li><a href="#" accesskey="5" title="">About Us</a></li>
+				<li><a href="../" accesskey="1" title="">Status</a></li>
+				<li class="current_page_item"><a href="#" accesskey="2" title="">Upload Code</a></li>
+                                <li><a href="../account" accesskey="3" title="">Login/Register</a></li>
+<!--				<li><a href="#" accesskey="3" title="">About Us</a></li>
+				<li><a href="#" accesskey="4" title="">Careers</a></li>
+				<li><a href="#" accesskey="6" title="">Contact Us</a></li>
 -->
 			</ul>
 		</div>
 	</div>
 </div>
-<div id="header-featured"> </div>
 <div id="banner-wrapper">
 	<div id="banner" class="container">
-		<p>This is <strong>Erubescent</strong>, a free, fully standards-compliant CSS template designed by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>. The photos in this template are from <a href="http://fotogrph.com/"> Fotogrph</a>. This free template is released under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so you're pretty much free to do whatever you want with it (even use it commercially) provided you give us credit for it. Have fun :) </p>
+		<?php
+		// Establishing Connection with Server by passing server_name, user_id and password as a parameter
+		$connection = mysql_connect("localhost", "root", "");
+
+		// Selecting Database
+		$db = mysql_select_db("accounts", $connection);
+		session_start();// Starting Session
+		// Storing Session
+		$user_check=$_SESSION['login_user'];
+		// SQL Query To Fetch Complete Information Of User
+		$ses_sql=mysql_query("select username from account where username='$user_check'", $connection);
+		$row = mysql_fetch_assoc($ses_sql);
+		$login_session =$row['username'];
+		mysql_close($connection); // Closing Connection
+
+		if(!isset($login_session)) {
+			echo 'Please login first<br>';
+			/*header("Refresh: 3; url=/var/www/html/account/index.php");*/
+			/*header('Location: /var/www/html/account/index.php'); */ // Redirecting To Home Page
+		}else {
+			echo '<form action="upload.php" method="post" enctype="multipart/form-data">'."\n";
+			echo 'Mapper:  '."\n";
+			echo '<input type="file" name="mapper"> <br>'."\n";
+			echo 'Reducer:  '."\n";
+			echo '<input type="file" name="reducer"> <br>'."\n";
+			echo 'Input File:  '."\n";
+			echo '<input type="file" name="input"> <br>'."\n";
+			echo '<input type="submit" value="Submit Code" name="submit">'."\n";
+			echo '</form>'."\n";
+		}
+		?>
 	</div>
 </div>
-
 <div id="wrapper">
+	<br></br>
+	<br></br>
+	<br></br>
+	<br></br>
+	<br></br>
+	<br></br>
+	<br></br>
+	<!--
 	<div id="featured-wrapper">
-		
 		<div class="extra2 margin-btm container">
 			<div class="ebox1">
 				<div class="title">
@@ -72,9 +113,12 @@ Released   : 20131115
 		</div>	
 
 	</div>
+	-->
 </div>
+<!--
 <div id="copyright" class="container">
 	<p>&copy; Untitled. All rights reserved. | Photos by <a href="http://fotogrph.com/">Fotogrph</a> | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
 </div>
+-->
 </body>
 </html>

@@ -17,8 +17,8 @@ Released   : 20131115
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="../default.css" rel="stylesheet" type="text/css" media="all" />
-<link href="../fonts.css" rel="stylesheet" type="text/css" media="all" />
+<link href="default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 
@@ -31,34 +31,26 @@ Released   : 20131115
 		</div>
 		<div id="menu">
 			<ul>
-				<li><a href="../" accesskey="1" title="">Status</a></li>
-				<li class="current_page_item"><a href="#" accesskey="2" title="">Upload Code</a></li>
-                                <li><a href="../account" accesskey="3" title="">Login/Register</a></li>
-<!--				<li><a href="#" accesskey="3" title="">About Us</a></li>
-				<li><a href="#" accesskey="4" title="">Careers</a></li>
-				<li><a href="#" accesskey="6" title="">Contact Us</a></li>
+				<li class="current_page_item"><a href="#" accesskey="1" title="">Status</a></li>
+				<li><a href="upload/" accesskey="2" title="">Upload Code</a></li>
+				<li><a href="account/" accesskey="3" title="">Login/Register</a></li>
+<!--				<li><a href="#" accesskey="5" title="">About Us</a></li>
 -->
 			</ul>
 		</div>
 	</div>
 </div>
+<div id="header-featured"> </div>
 <div id="banner-wrapper">
 	<div id="banner" class="container">
-		<form action="upload.php" method="post" enctype="multipart/form-data">
-			Mapper:  
-			<input type="file" name="mapper"> <br>
-			Reducer:  
-			<input type="file" name="reducer"> <br>
-			Input File:  
-			<input type="file" name="input"> <br>
-			<input type="submit" value="Submit Code" name="submit">
-		</form>
+		<?php system('whoami'); ?>
+		<p>This is <strong>Erubescent</strong>, a free, fully standards-compliant CSS template designed by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>. The photos in this template are from <a href="http://fotogrph.com/"> Fotogrph</a>. This free template is released under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so you're pretty much free to do whatever you want with it (even use it commercially) provided you give us credit for it. Have fun :) </p>
 	</div>
 </div>
+
 <div id="wrapper">
-	<br></br>
-	<!--
 	<div id="featured-wrapper">
+		
 		<div class="extra2 margin-btm container">
 			<div class="ebox1">
 				<div class="title">
@@ -81,12 +73,9 @@ Released   : 20131115
 		</div>	
 
 	</div>
-	-->
 </div>
-<!--
 <div id="copyright" class="container">
 	<p>&copy; Untitled. All rights reserved. | Photos by <a href="http://fotogrph.com/">Fotogrph</a> | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
 </div>
--->
 </body>
 </html>
