@@ -10,10 +10,6 @@ Version    : 1.0
 Released   : 20131115
 
 -->
-<?php
-include('../session.php');
-?>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -35,13 +31,37 @@ include('../session.php');
 		</div>
 		<div id="menu">
 			<ul>
-				<li><a href="../" accesskey="1" title="">Status</a></li>
-				<li class="current_page_item"><a href="#" accesskey="2" title="">Upload Code</a></li>
-                                <li><a href="../account" accesskey="3" title="">Login/Register</a></li>
-<!--				<li><a href="#" accesskey="3" title="">About Us</a></li>
-				<li><a href="#" accesskey="4" title="">Careers</a></li>
-				<li><a href="#" accesskey="6" title="">Contact Us</a></li>
--->
+				<?php
+				// Establishing Connection with Server by passing server_name, user_id and password as a parameter
+				$connection = mysql_connect("localhost", "root", "");
+	
+				// Selecting Database
+				$db = mysql_select_db("accounts", $connection);
+				session_start();// Starting Session
+				// Storing Session
+				$user_check=$_SESSION['login_user'];
+				// SQL Query To Fetch Complete Information Of User
+				$ses_sql=mysql_query("select username from account where username='$user_check'", $connection);
+				$row = mysql_fetch_assoc($ses_sql);
+				$login_session =$row['username'];
+				mysql_close($connection); // Closing Connection
+
+				echo '<li><a href="../" accesskey="1" title="">Status</a></li>';
+				echo '<li class="current_page_item"><a href="#" accesskey="2" title="">Upload Code</a></li>';
+                                if(!isset($login_session)) {
+                                        echo '<li><a href="../account/" accesskey="3" title="">Login/Register</a></li>';
+                                        echo '<li><a accesskey="4" title=""> </a></li>';
+                                        echo '<li><a href="#" accesskey="5" title="">';
+                                        echo 'Hello Guest!';
+                                        echo '</a></li>';
+                                }else {
+                                        echo '<li><a href="../session.php" accesskey="3" title="">Logout</a></li>';
+                                        echo '<li><a accesskey="4" title=""> </a></li>';
+                                        echo '<li><a href="#" accesskey="5" title="">';
+                                        echo "Hello $login_session!";
+                                        echo '</a></li>';
+                                }
+				?>
 			</ul>
 		</div>
 	</div>
