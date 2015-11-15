@@ -15,9 +15,9 @@ mysql_query("update account set submit_count=$count+1 where username='$user_chec
 mysql_close($connection); // Closing Connection
 
 if(!file_exists("../files/$user_check")) {
-	system("mkdir ../files/$user_check");
+	shell_exec("mkdir ../files/$user_check");
 }
-system("mkdir ../files/$user_check/$count");
+shell_exec("mkdir ../files/$user_check/$count");
 $isdone1 = move_uploaded_file($_FILES["mapper"]["tmp_name"], "/var/www/html/files/$user_check/$count/"."mapper.py");
 $isdone2 = move_uploaded_file($_FILES["reducer"]["tmp_name"], "/var/www/html/files/$user_check/$count/"."reducer.py");
 $isdone3 = move_uploaded_file($_FILES["input"]["tmp_name"], "/var/www/html/files/$user_check/$count/"."input");
@@ -25,21 +25,20 @@ if($isdone1 == true && $isdone2 == true&& $isdone3 == true) {
     echo "upload succeed<br>";
 }
 
-shell_exec('sudo su hadoopuser -c "../exec/run.sh"& > /dev>null &');
+$BIN_PATH='/home/hadoopuser/hadoop/bin';
+shell_exec('echo "#!/bin/bash" > run.sh');
+shell_exec("echo '{$BIN_PATH}/hdfs dfs -mkdir /files' >> run.sh");
+shell_exec("echo '{$BIN_PATH}/hdfs dfs -copyFromLocal ../files/$login_session/$count/input /files/input' >> run.sh");
+shell_exec("echo \"{$BIN_PATH}/hadoop jar /home/hadoopuser/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.6.1.jar \\ \" >> run.sh");
+shell_exec("echo '             -mapper 'python ../files/$login_session/$count/mapper.py' \\ ' >> run.sh");
+shell_exec("echo '             -reducer 'python ../files/$login_session/$count/reducer.py' \\ ' >> run.sh");
+shell_exec("echo '             -input '/files/input' \\ ' >> run.sh");
+shell_exec("echo \"             -output '/log_outdir'\" >> run.sh");
+shell_exec("echo \"$BIN_PATH/hdfs dfs -copyToLocal  /log_outdir/* ../files/*\" >> run.sh");
+shell_exec("echo \"\" >> run.sh");
+
+shell_exec("sudo su hadoopuser -c \"run.sh\"& > /dev>null &");
+
 header("Location: ../");
 
-/*
-$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-// Check if image file is a actual image or fake image
-if(isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
-        $uploadOk = 0;
-    }
-}
-*/
 ?> 
