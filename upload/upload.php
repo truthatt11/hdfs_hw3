@@ -34,14 +34,14 @@ shell_exec("echo '{$BIN_PATH}/hdfs dfs -copyFromLocal ../files/$login_session/$c
 shell_exec("echo '{$BIN_PATH}/hadoop jar /home/hadoopuser/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.6.1.jar \\' >> run.sh");
 shell_exec("echo '             -mapper \"python ../files/$login_session/$count/mapper.py\" \\' >> run.sh");
 shell_exec("echo '             -reducer \"python ../files/$login_session/$count/reducer.py\" \\' >> run.sh");
-shell_exec("echo '             -input '/files/input' \\' >> run.sh");
-shell_exec("echo \"             -output '/log_outdir'\" >> run.sh");
+shell_exec("echo '             -input \"/files/input\" \\' >> run.sh");
+shell_exec("echo '             -output \"/log_outdir\"' >> run.sh");
 shell_exec("echo \"$BIN_PATH/hdfs dfs -copyToLocal  /log_outdir/* ../files/*\" >> run.sh");
 shell_exec("echo \"\" >> run.sh");
 
 shell_exec('chmod a+x run.sh');
 
-system("sudo su hadoopuser -c \"./run.sh & > /dev>null &\"");
+//system("sudo su hadoopuser -c \"./run.sh & > /dev>null &\"");
 //system("sudo su hadoopuser --command \"./run.sh\"");
 
 header("Location: ../");
