@@ -57,7 +57,9 @@ if (isset($_POST['login']) || isset($_POST['register'])) {
 				$query = mysql_query("insert into account (username, password, submit_count) values ('$username', '$password', 0)", $connection);
 				$_SESSION['login_user']=$username; // Initializing Session
 			}
-			header("refresh: 5; url=./");
+			header("refresh: 5; url=../");
+			session_start();
+			$_SESSION['login_user']=$username;
 			mysql_close($connection); // Closing Connection
 		}
 	}
