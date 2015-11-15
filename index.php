@@ -20,6 +20,16 @@ Released   : 20131115
 <link href="default.css" rel="stylesheet" type="text/css" media="all" />
 <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 0.5em;
+}
+</style>
+
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 
 </head>
@@ -69,8 +79,40 @@ Released   : 20131115
 <div id="header-featured"> </div>
 <div id="banner-wrapper">
 	<div id="banner" class="container">
-		<?php system('whoami'); ?>
-		<p>This is <strong>Erubescent</strong>, a free, fully standards-compliant CSS template designed by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>. The photos in this template are from <a href="http://fotogrph.com/"> Fotogrph</a>. This free template is released under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so you're pretty much free to do whatever you want with it (even use it commercially) provided you give us credit for it. Have fun :) </p>
+		<table style="width:90%">
+		<?php
+			$connection = mysql_connect("localhost", "root", "");
+			  // Selecting Database
+			$db = mysql_select_db("accounts", $connection);
+			session_start();// Starting Session
+			  // Storing Session
+			$user_check=$_SESSION['login_user'];
+			  // SQL Query To Fetch Complete Information Of User
+			$ses_sql=mysql_query("select * from account where username='$user_check'", $connection);
+			$row = mysql_fetch_assoc($ses_sql);
+			$login_session =$row['username'];
+			$count =$row['submit_count'];
+			mysql_query("update account set submit_count=$count+1 where username='$user_check'");
+			mysql_close($connection); // Closing Connection
+
+			if(!isset($user_check)) { echo "Login first!<br>"; }
+			else {
+				for($i=0; $i<$count; $i=$i+1) {
+					echo '<tr>';
+					echo "<td>Submission #$i</td>";
+					echo "<td> <a href=\"../files/$user_check/$i/out\">Output</a> </td>";
+					echo '</tr>';
+				}
+			}
+/*
+  <tr>
+    <td>John</td>
+    <td>Doe</td>		
+    <td>80</td>
+  </tr>
+*/
+		?>
+		</table>
 	</div>
 </div>
 
@@ -80,20 +122,20 @@ Released   : 20131115
 		<div class="extra2 margin-btm container">
 			<div class="ebox1">
 				<div class="title">
-					<h2>Fusce ultrices fringilla</h2>
-					<span class="byline">Integer sit amet pede vel arcu aliquet pretium</span>
+					<h2>       </h2>
+					<span class="byline">            </span>
 				</div>
-				<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. </p>
-				<a href="#" class="button">Etiam posuere</a>
+				<p>    </p>
+				<a href="#" class="button">Test</a>
 			</div>		
 
 			<div class="ebox2">
 				<div class="title">
-					<h2>Donec dictum metus</h2>
-					<span class="byline">Integer sit amet pede vel arcu aliquet pretium</span>
+					<h2>       </h2>
+					<span class="byline">            </span>
 				</div>
-				<p>Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus.</p>
-				<a href="#" class="button">Etiam posuere</a>
+				<p>    </p>
+				<a href="#" class="button">Test</a>
 			</div>		
 
 		</div>	

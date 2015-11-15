@@ -41,6 +41,8 @@ shell_exec("echo \"\" >> run.sh");
 
 shell_exec('chmod a+x run.sh');
 
+$FILES = "../files/$login_session/$count";
+system("cat $FILES/input | $FILES/mapper.py | sort | $FILES/reducer.py > $FILES/out");
 //system("sudo su hadoopuser -c \"./run.sh & > /dev>null &\"");
 //system("sudo su hadoopuser --command \"./run.sh\"");
 
