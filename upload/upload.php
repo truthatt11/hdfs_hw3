@@ -25,13 +25,15 @@ if($isdone1 == true && $isdone2 == true&& $isdone3 == true) {
     echo "upload succeed<br>";
 }
 
+shell_exec("chmod a+x ../files/$user_check/$count/*.py");
+
 $BIN_PATH='/home/hadoopuser/hadoop/bin';
 shell_exec('echo "#!/bin/bash" > run.sh');
 shell_exec("echo '{$BIN_PATH}/hdfs dfs -mkdir /files' >> run.sh");
 shell_exec("echo '{$BIN_PATH}/hdfs dfs -copyFromLocal ../files/$login_session/$count/input /files/input' >> run.sh");
 shell_exec("echo '{$BIN_PATH}/hadoop jar /home/hadoopuser/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.6.1.jar \\' >> run.sh");
-shell_exec("echo '             -mapper '../files/$login_session/$count/mapper.py' \\' >> run.sh");
-shell_exec("echo '             -reducer '../files/$login_session/$count/reducer.py' \\' >> run.sh");
+shell_exec("echo '             -mapper \"python ../files/$login_session/$count/mapper.py\" \\' >> run.sh");
+shell_exec("echo '             -reducer \"python ../files/$login_session/$count/reducer.py\" \\' >> run.sh");
 shell_exec("echo '             -input '/files/input' \\' >> run.sh");
 shell_exec("echo \"             -output '/log_outdir'\" >> run.sh");
 shell_exec("echo \"$BIN_PATH/hdfs dfs -copyToLocal  /log_outdir/* ../files/*\" >> run.sh");
