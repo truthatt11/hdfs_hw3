@@ -115,11 +115,11 @@ th, td {
 		</table>
 	</div>
 </div>
-
+<!--
 <div id="wrapper">
 	<div id="featured-wrapper">
-		
 		<div class="extra2 margin-btm container">
+
 			<div class="ebox1">
 				<div class="title">
 					<h2>       </h2>
@@ -137,13 +137,10 @@ th, td {
 				<p>    </p>
 				<a href="#" class="button">Test</a>
 			</div>		
-
 		</div>	
-
 	</div>
 </div>
-<div id="copyright" class="container">
-	<p>&copy; Untitled. All rights reserved. | Photos by <a href="http://fotogrph.com/">Fotogrph</a> | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
-</div>
+-->
+
 </body>
 </html>
