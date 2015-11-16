@@ -32,18 +32,19 @@ shell_exec('echo "#!/bin/bash" > run.sh');
 shell_exec("echo '{$BIN_PATH}/hdfs dfs -mkdir /files' >> run.sh");
 shell_exec("echo '{$BIN_PATH}/hdfs dfs -copyFromLocal ../files/$login_session/$count/input /files/input' >> run.sh");
 shell_exec("echo '{$BIN_PATH}/hadoop jar /home/hadoopuser/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.6.1.jar \\' >> run.sh");
-shell_exec("echo '             -mapper \"python ../files/$login_session/$count/mapper.py\" \\' >> run.sh");
-shell_exec("echo '             -reducer \"python ../files/$login_session/$count/reducer.py\" \\' >> run.sh");
+shell_exec("echo '             -file \"../files/$login_session/$count/mapper.py\" -mapper mapper.py\\' >> run.sh");
+shell_exec("echo '             -file \"../files/$login_session/$count/reducer.py\" -reducer reducer.py\\' >> run.sh");
 shell_exec("echo '             -input \"/files/input\" \\' >> run.sh");
 shell_exec("echo '             -output \"/log_outdir\"' >> run.sh");
-shell_exec("echo \"$BIN_PATH/hdfs dfs -copyToLocal  /log_outdir/* ../files/*\" >> run.sh");
+shell_exec("echo \"$BIN_PATH/hdfs dfs -copyToLocal  /log_outdir/part-00000 ../files/$login_session/$count/out\" >> run.sh");
+shell_exec("echo \"$BIN_PATH/hdfs dfs -rm -r -f  /log_outdir\" >> run.sh");
 shell_exec("echo \"\" >> run.sh");
 
 shell_exec('chmod a+x run.sh');
 
 $FILES = "../files/$login_session/$count";
-system("cat $FILES/input | $FILES/mapper.py | sort | $FILES/reducer.py > $FILES/out");
-//system("sudo su hadoopuser -c \"./run.sh & > /dev>null &\"");
+//system("cat $FILES/input | $FILES/mapper.py | sort | $FILES/reducer.py > $FILES/out");
+system("sudo su hadoopuser -c \"./run.sh & > /dev>null &\"");
 //system("sudo su hadoopuser --command \"./run.sh\"");
 
 header("Location: ../");

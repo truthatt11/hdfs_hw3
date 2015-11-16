@@ -92,7 +92,6 @@ th, td {
 			$row = mysql_fetch_assoc($ses_sql);
 			$login_session =$row['username'];
 			$count =$row['submit_count'];
-			mysql_query("update account set submit_count=$count+1 where username='$user_check'");
 			mysql_close($connection); // Closing Connection
 
 			if(!isset($user_check)) { echo "Login first!<br>"; }
